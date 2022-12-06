@@ -12,7 +12,7 @@ function handleScroll(event: Event) {
 
 window.addEventListener('scroll', handleScroll);
 
-// Event com instaceof
+// Event com instanceof
 
 function ativarMenu(event: Event) {
   if (event instanceof MouseEvent) {
