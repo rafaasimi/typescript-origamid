@@ -3,6 +3,7 @@ import { fetchData } from './fetchData.js';
 import { normalizarTransacao } from './normalizarTransacao.js';
 async function handleData() {
     const data = await fetchData('https://api.origamid.dev/json/transacoes.json');
+    console.log(data);
     if (!data) {
         return;
     }
@@ -29,6 +30,10 @@ function preencherEstatisticas(transacoes) {
     }
     preencherLista(data.pagamento, 'pagamento');
     preencherLista(data.status, 'status');
+    const diaElement = document.querySelector('#dia span');
+    if (diaElement) {
+        diaElement.innerText = data.melhorDia[0];
+    }
 }
 function preencherTabela(transacoes) {
     const tabela = document.querySelector('#transacoes tbody');

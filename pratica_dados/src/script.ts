@@ -7,6 +7,7 @@ async function handleData() {
   const data = await fetchData<TransacaoAPI[]>(
     'https://api.origamid.dev/json/transacoes.json'
   );
+  console.log(data);
 
   if (!data) {
     return;
@@ -42,6 +43,12 @@ function preencherEstatisticas(transacoes: Transacao[]): void {
 
   preencherLista(data.pagamento, 'pagamento');
   preencherLista(data.status, 'status');
+
+  const diaElement = document.querySelector<HTMLElement>('#dia span');
+
+  if (diaElement) {
+    diaElement.innerText = data.melhorDia[0];
+  }
 }
 
 function preencherTabela(transacoes: Transacao[]): void {
