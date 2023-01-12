@@ -4,8 +4,16 @@ body {
   background: #485563; /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #485563, #29323c); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #485563, #29323c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
   color: white;
+}
+
+body.paused {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    touch-action: manipulation;
 }
 
 img,
@@ -51,9 +59,11 @@ h1 {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 3px 3px 5px rgba(0,0,0,.5);
+    background: black;
 }
 
 #slide-controls {
+    position: relative;
     grid-area: 1/1;
 
     display: grid;
@@ -64,4 +74,41 @@ h1 {
     opacity: 0;
     appearance: none;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+#slide-thumb {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    pointer-events: none;
+}
+
+#slide-thumb > span{
+    flex: 1;
+    display: block;
+    height: 4px;
+    background: rgba(255, 255, 255, .2);
+    margin: 5px;
+    border-radius: 4px;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+#slide-thumb .thumb-item.active{
+    display: block;
+    height: inherit;
+    background: rgba(255, 255, 255, .9);
+    borde-radius: 4px;
+    transform: translateX(-100%);
+    animation: thumb forwards linear running;
+}
+
+#slide-thumb .thumb-item.paused {
+    animation-play-state: paused;
+}
+
+@keyframes thumb {
+    to {
+        transform: initial;
+    }
 }
