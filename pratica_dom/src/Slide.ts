@@ -1,3 +1,5 @@
+import { Timeout } from './Timeout.js';
+
 export class Slide {
   container: Element;
   slides: Element[];
@@ -5,6 +7,7 @@ export class Slide {
   time: number;
   index: number;
   slide: Element;
+  timeout: Timeout | null;
 
   constructor(
     container: Element,
@@ -17,6 +20,7 @@ export class Slide {
     this.controls = controls;
     this.time = time;
 
+    this.timeout = null;
     this.index = 0;
     this.slide = this.slides[this.index];
 
@@ -29,32 +33,41 @@ export class Slide {
 
   show(index: number) {
     this.index = index;
-    this.slide = this.slides[this.index]
+    this.slide = this.slides[this.index];
     this.slides.forEach((el) => this.hide(el));
     this.slide.classList.add('active');
+    this.auto(this.time);
+  }
+
+  auto(time: number) {
+    this.timeout?.clear();
+    this.timeout = new Timeout(() => this.next(), time);
+
+    //const id = setTimeout(() => this.next(), time);
+    //clearTimeout(id);
   }
 
   prev() {
     const prev = this.index > 0 ? this.index - 1 : this.slides.length - 1;
-    this.show(prev)
+    this.show(prev);
   }
 
   next() {
-    const next = (this.index + 1) < this.slides.length ? this.index + 1 : 0
-    this.show(next)
+    const next = this.index + 1 < this.slides.length ? this.index + 1 : 0;
+    this.show(next);
   }
 
   private addControls() {
     const prevButton = document.createElement('button');
     const nextButton = document.createElement('button');
-    prevButton.innerText = 'Slide anterior'
-    nextButton.innerText = 'Próximo slide'
+    prevButton.innerText = 'Slide anterior';
+    nextButton.innerText = 'Próximo slide';
 
     this.controls.appendChild(prevButton);
     this.controls.appendChild(nextButton);
-    
-    prevButton.addEventListener('pointerup', () => this.prev())
-    nextButton.addEventListener('pointerup', () => this.next())
+
+    prevButton.addEventListener('pointerup', () => this.prev());
+    nextButton.addEventListener('pointerup', () => this.next());
   }
 
   private init() {
