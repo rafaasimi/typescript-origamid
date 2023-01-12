@@ -54,15 +54,17 @@ export class Slide {
 
   pause() {
     this.pausedTimeout = new Timeout(() => {
+      this.timeout?.pause();
       this.paused = true;
     }, 300);
   }
 
   continue() {
+    console.log('continue')
     this.pausedTimeout?.clear();
     if (this.paused) {
       this.paused = false;
-      this.auto(this.time);
+      this.timeout?.continue();
     }
   }
 
