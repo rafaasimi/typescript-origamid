@@ -24,5 +24,8 @@ git clone https://github.com/rafaasimi/typescript-origamid.git
 cd typescript-origamid
 ```
 
+## 🖼️ Layout
+<img src=".github/slide.png">
+
 ---
 <p>Criado com 💙 por <a href='https://github.com/rafaasimi/' target='_blank'>Rafael Simionato</a></p>
